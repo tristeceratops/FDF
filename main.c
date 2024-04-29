@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:06:16 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/04/29 14:21:25 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:22:08 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ int		red_cross(void)
 	exit(0);
 	return(0);
 }
+/*
+t_coord iso_projection(t_coord coord)
+{
+	t_coord new_coord;
+
+	new_coord.x = (coord.x - coord.y) * cos(0.523599);
+	new_coord.y = -coord.z + (coord.x + coord.y) * sin(0.523599);
+	return (new_coord);
+}*/
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -119,25 +128,21 @@ void	draw_line(t_coord start, t_coord end, t_data *data, int color)
 	}
 }
 
-//function to draw a smiley face
-void	draw_smiley(t_data *img, int color)
+//draw square in isometric projection, x and y are the top left corner of the square
+void draw_isometric_square(t_coord start, int size, t_data *img)
 {
-	//face with draw_line
-	draw_line((t_coord){100, 100}, (t_coord){160, 100}, img, color);
-	draw_line((t_coord){100, 100}, (t_coord){100, 160}, img, color);
-	draw_line((t_coord){160, 100}, (t_coord){160, 160}, img, color);
-	draw_line((t_coord){100, 160}, (t_coord){160, 160}, img, color);
-	//eyes
-	draw_line((t_coord){110, 110}, (t_coord){120, 110}, img, color);
-	draw_line((t_coord){140, 110}, (t_coord){150, 110}, img, color);
-	//nose
-	draw_line((t_coord){130, 120}, (t_coord){130, 130}, img, color);
-	//mouth
-	draw_line((t_coord){120, 140}, (t_coord){140, 140}, img, color);
-	draw_line((t_coord){120, 140}, (t_coord){130, 150}, img, color);
-	draw_line((t_coord){130, 150}, (t_coord){140, 140}, img, color);
-}
+	t_coord p3 = {start.x + size, start.y + size};
+	t_coord p4 = {start.x, start.y + size};
 
+	draw_line(p3, p4, img, 0x00FF0000);
+
+	t_coord p7 = {start.x + size / 2 + size, start.y - size / 2 + size};
+	t_coord p8 = {start.x + size / 2, start.y - size / 2 + size};
+
+	draw_line(p7, p8, img, 0x00FFFF00);
+	draw_line(p3, p7, img, 0x00FF00FF);
+	draw_line(p4, p8, img, 0x00FF00FF);
+}
 
 int main(void)
 {
@@ -148,13 +153,8 @@ int main(void)
 	img.img = mlx_new_image(vars.mlx, 1920, 1080);
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	//generate_square(&img, 0x00FF0000, 50, 100, 100);
-	//generate_square(&img, 0x00FFFF00, 50, 500, 500);
-	//generate_square(&img, 0x0000FFFF, 100, 1820, 980);
 	mlx_hook(vars.win, 2, 1L<<0, close_w, &vars);
 	mlx_hook(vars.win, 17, 0L, red_cross, &vars);
-	draw_smiley(&img, 0x00FF0000);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	draw_line((t_coord){100, 100}, (t_coord){200, 200}, &img, 0x00FF0000);
 	mlx_loop(vars.mlx);
 }
