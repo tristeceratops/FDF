@@ -14,9 +14,16 @@ typedef struct  s_data
     int         endian;
 }               t_data;
 
-typedef struct	s_vars {
+typedef struct	s_vars
+{
 	void	*mlx;
 	void	*win;
 }				t_vars;
+
+typedef struct  s_coord
+{
+    int     x;
+    int     y;
+}               t_coord;
 
 #endif
