@@ -20,11 +20,20 @@ typedef struct	s_vars
 	void	*win;
 }				t_vars;
 
-typedef struct  s_coord
+typedef struct  s_3dcoord
 {
-    int     x;
-    int     y;
-    //int     z;
-}               t_coord;
+	int		x;
+	int		y;
+	int		z;
+}               t_3dcoord;
+
+typedef struct s_2dcoord
+{
+	int x;
+	int y;
+}               t_2dcoord;
+
+void	draw_line(t_2dcoord start, t_2dcoord end, t_data *data, int color);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

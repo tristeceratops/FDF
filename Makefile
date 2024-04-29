@@ -1,6 +1,6 @@
 NAME := fdf
 FLAGS := -Wall -Wextra -Werror
-FILES := main.c
+FILES := main.c draw_line.c
 OBJ := $(FILES:.c=.o)
 LIBFT := libft/
 LIBFT_LIB := libft.a
