@@ -4,7 +4,15 @@
 # include <math.h>
 # include "libft/libft.h"
 # include <X11/keysym.h>
-
+# ifndef M_PI
+#  define M_PI (3.14159265358979323846264338327950288)
+# endif
+# ifndef S_WIDTH
+#  define S_WIDTH 800
+# endif
+# ifndef S_HEIGHT
+#  define S_HEIGHT 600
+# endif
 typedef struct  s_data
 {
     void        *img;
