@@ -6,37 +6,16 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:00:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/04/30 14:26:55 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:53:52 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-# define R(a) (a) >> 16
-# define G(a) ((a) >> 8) & 0xFF
-# define B(a) (a) && 0xFF
-# define RGB(a, b, c) ((a) << 16) + ((b) << 8) + (c)
 
-int		gradien(int startcolor, int endcolor, int len, int pix)
+void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 {
-	double increment[3];
-	int	new[3];
-	int newcolor;
-
-	increment[0] = (double)((R(endcolor)) - (R(startcolor))) / (double) len;
-	increment[1] = (double)((G(endcolor)) - (G(startcolor))) / (double) len;
-	increment[2] = (double)((B(endcolor)) - (B(startcolor))) / (double) len;
-
-	new[0] = (R(startcolor)) + ft_round(pix * increment[0]);
-    new[1] = (G(startcolor)) + ft_round(pix * increment[1]);
-    new[2] = (B(startcolor)) + ft_round(pix * increment[2]);
-
-    newcolor = RGB(new[0], new[1], new[2]);
-
-    return (newcolor);
-}
-
-void	draw_line_x(t_2dcoord start, t_2dcoord end, t_data *data, int start_color, int end_color)
-{
+	ft_printf("x_start: %d, %d\n", start.x, start.y);
+	ft_printf("x_end: %d, %d\n", end.x, end.y);
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
 	int y1 = 1;
@@ -47,11 +26,9 @@ void	draw_line_x(t_2dcoord start, t_2dcoord end, t_data *data, int start_color, 
 	}
 	int d = 2 * dy - dx;
 	int y = start.y;
-	int steps = end.x - start.x;
-	int increment = (end_color - start_color) / steps;
 	while(start.x <= end.x)
 	{
-		my_mlx_pixel_put(data, start.x, y, color);
+		mlx_pixel_put(data->mlx, data->img, start.x, y, color);
 		if (d > 0)
 		{
 			y += y1;
@@ -63,8 +40,10 @@ void	draw_line_x(t_2dcoord start, t_2dcoord end, t_data *data, int start_color, 
 	}
 }
 //draw_line_y
-void	draw_line_y(t_2dcoord start, t_2dcoord end, t_data *data, int color)
+void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 {
+	ft_printf("y_start: %d, %d\n", start.x, start.y);
+	ft_printf("y_end: %d, %d\n", end.x, end.y);
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
 	int x1 = 1;
@@ -75,9 +54,12 @@ void	draw_line_y(t_2dcoord start, t_2dcoord end, t_data *data, int color)
 	}
 	int d = 2 * dx - dy;
 	int x = start.x;
+	ft_printf("dx: %d, dy: %d\n", dx, dy);
+	ft_printf("loop\n");
 	while(start.y <= end.y)
 	{
-		my_mlx_pixel_put(data, x, start.y, color);
+		ft_printf("before pixel_put() x: %d, y: %d\n", x, start.y);
+		mlx_pixel_put(data->mlx, data->img, x, start.y, color);
 		if (d > 0)
 		{
 			x += x1;
@@ -86,10 +68,12 @@ void	draw_line_y(t_2dcoord start, t_2dcoord end, t_data *data, int color)
 		else
 			d = d + 2 * dx;
 		start.y += 1;
+		ft_printf("x: %d, y: %d\n", x, start.y);
 	}
+	ft_printf("end\n");
 }
 //draw line function that redirect to draw_line_x or draw_line_y depending on the slope of the line
-void	draw_line(t_2dcoord start, t_2dcoord end, t_data *data, int color)
+void	draw_line(t_dot start, t_dot end, t_data *data, int color)
 {
 	if (abs(end.y - start.y) < abs(end.x - start.x))
 	{

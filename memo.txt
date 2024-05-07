@@ -1,0 +1,11 @@
+to do:
+gradient function
+way to handle gradient whatever the max height is
+way to handle gradient when the height is gradient to
+find a way to center the projection in the screen
+find a way to show all the projection whatever is size
+parse the .fdf file and draw the point
+
+a way to draw the point:
+first parse the file with GNL and split to put everything in a char **table
+dessiner les points lorsqu'ils sont adjacents. char[0][0] avec char[0][1] et char[1][0]
