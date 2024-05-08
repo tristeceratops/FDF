@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:21:45 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/08 15:28:12 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:08:52 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_dot	projection_iso(t_dot p)
 {
 	t_dot p2;
 
-	p2.x = (p.x - p.y) * cos(0.55);
-	p2.y = (p.x + p.y) * sin(0.55) - p.z;
+	p2.x = (p.x - p.y) * cos(0.42);
+	p2.y = (p.x + p.y) * sin(0.42) - p.z;
 	return (p2);
 }

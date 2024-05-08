@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:00:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/08 15:59:10 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:13:58 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	draw_line(t_dot start, t_dot end, t_data *data, int color)
 {
 	start = projection_iso(start);
 	end = projection_iso(end);
-	start.x += 400;
-	start.y += 400;
-	end.x += 400;
-	end.y += 400;
+	start.x += 350;
+	start.y += 350;
+	end.x += 350;
+	end.y += 350;
 	if (abs(end.y - start.y) < abs(end.x - start.x))
 	{
 		if (start.x > end.x)
