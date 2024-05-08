@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:24:20 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/07 17:33:36 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:59:43 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_dot	**allocate_matrix(char *path)
 	t_dot	**matrix;
 
 	x = 0;
-	y = 0;
+	y = 1;
 	fd = open(path, O_RDONLY);
 	if (fd <= 0)
 		ft_error("files does not exist.");
@@ -69,8 +69,8 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y)
 	x = 0;
 	while (split[x])
 	{
-		dot_matrix[y][x].x = x;
-		dot_matrix[y][x].y = y;
+		dot_matrix[y][x].x = x * ZOOM;
+		dot_matrix[y][x].y = y * ZOOM;
 		dot_matrix[y][x].z = ft_atoi(split[x]);
 		dot_matrix[y][x].is_last_in_line = 0;
 		free(split[x]);
@@ -97,8 +97,8 @@ t_dot	**read_map(char *path)
 		ft_error("file does not exist.");
     while (get_next_line(fd, &buffer) > 0)
 		parse_line(buffer, dot_matrix, y++);
-	dot_matrix[y] = NULL;
-	free(buffer);
+	parse_line(buffer, dot_matrix, y);
+	//free(buffer);
 	close(fd);
 	return (dot_matrix);
 }

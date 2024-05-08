@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:06:16 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/07 17:46:57 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:14:52 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,11 @@ int main(int argc, char **argv)
 	data.map = read_map(argv[1]);
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, 1920, 1080, "FDF");
+	data.win_height = 1080;
+	data.win_width = 1920;
 	data.img = mlx_new_image(data.mlx, 1920, 1080);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
-	//draw_map(data.map, &data);
-	mlx_pixel_put(data.mlx, data.win, 0, 0, 0xfc0345);
-	mlx_pixel_put(data.mlx, data.win, 101, 100, 0xfc0345);
-	mlx_pixel_put(data.mlx, data.win, 100, 101, 0xfc0345);
-	mlx_pixel_put(data.mlx, data.win, 101, 101, 0xfc0345);
-	draw_line(data.map[0][0], data.map[1][1], &data, 0xfc0345);
+	draw_map(data.map, &data);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_loop(data.mlx);
 }

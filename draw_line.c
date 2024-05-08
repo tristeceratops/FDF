@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:00:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/07 17:53:52 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:59:10 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 {
-	ft_printf("x_start: %d, %d\n", start.x, start.y);
-	ft_printf("x_end: %d, %d\n", end.x, end.y);
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
 	int y1 = 1;
@@ -28,7 +26,9 @@ void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 	int y = start.y;
 	while(start.x <= end.x)
 	{
-		mlx_pixel_put(data->mlx, data->img, start.x, y, color);
+		if (start.x < 0 && start.x >= data->win_width && y < 0 && y >= data->win_height)
+			break;
+		my_mlx_pixel_put(data, start.x, y, color);
 		if (d > 0)
 		{
 			y += y1;
@@ -42,8 +42,6 @@ void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 //draw_line_y
 void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 {
-	ft_printf("y_start: %d, %d\n", start.x, start.y);
-	ft_printf("y_end: %d, %d\n", end.x, end.y);
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
 	int x1 = 1;
@@ -54,12 +52,11 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 	}
 	int d = 2 * dx - dy;
 	int x = start.x;
-	ft_printf("dx: %d, dy: %d\n", dx, dy);
-	ft_printf("loop\n");
 	while(start.y <= end.y)
 	{
-		ft_printf("before pixel_put() x: %d, y: %d\n", x, start.y);
-		mlx_pixel_put(data->mlx, data->img, x, start.y, color);
+		if (x < 0 && x >= data->win_width && start.y < 0 && start.y >= data->win_height)
+			break;
+		my_mlx_pixel_put(data, x, start.y, color);
 		if (d > 0)
 		{
 			x += x1;
@@ -68,13 +65,17 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 		else
 			d = d + 2 * dx;
 		start.y += 1;
-		ft_printf("x: %d, y: %d\n", x, start.y);
 	}
-	ft_printf("end\n");
 }
 //draw line function that redirect to draw_line_x or draw_line_y depending on the slope of the line
 void	draw_line(t_dot start, t_dot end, t_data *data, int color)
 {
+	start = projection_iso(start);
+	end = projection_iso(end);
+	start.x += 400;
+	start.y += 400;
+	end.x += 400;
+	end.y += 400;
 	if (abs(end.y - start.y) < abs(end.x - start.x))
 	{
 		if (start.x > end.x)

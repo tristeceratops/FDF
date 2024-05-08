@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:17:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/07 17:05:31 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:09:07 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    draw_map(t_dot **map, t_data *img)
 {
     int     x;
     int     y;
-
+    
     y = 0;
     while (map[y])
     {
@@ -29,6 +29,9 @@ void    draw_map(t_dot **map, t_data *img)
                 draw_line(map[y][x], map[y + 1][x], img, 0x00FF00);
             x++;
         }
+        if (map[y + 1])
+            draw_line(map[y][x], map[y + 1][x], img, 0x00FF00);
+        draw_line(map[y][x - 1], map[y][x], img, 0x00FF00);
         y++;
     }
 }

@@ -6,16 +6,9 @@
 # include "gnl/get_next_line.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
-# ifndef M_PI
-#  define M_PI (3.14159265358979323846264338327950288)
+# ifndef ZOOM
+#  define ZOOM 20
 # endif
-# ifndef S_WIDTH
-#  define S_WIDTH 1920
-# endif
-# ifndef S_HEIGHT
-#  define S_HEIGHT 1080
-# endif
-
 typedef struct s_dot
 {
 	int	x;
@@ -33,6 +26,8 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		win_width;
+	int		win_height;
 	t_dot	**map;
 }		t_data;
 
@@ -41,5 +36,6 @@ t_dot	**read_map(char *path);
 void	draw_line(t_dot start, t_dot end, t_data *data, int color);
 t_dot	projection_iso(t_dot p);
 void    draw_map(t_dot **map, t_data *img);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif
