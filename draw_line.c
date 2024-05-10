@@ -6,13 +6,13 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:00:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/08 16:13:58 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:25:10 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
+void	draw_line_x(t_dot start, t_dot end, t_data *data, int *color)
 {
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
@@ -26,9 +26,8 @@ void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 	int y = start.y;
 	while(start.x <= end.x)
 	{
-		if (start.x < 0 && start.x >= data->win_width && y < 0 && y >= data->win_height)
-			break;
-		my_mlx_pixel_put(data, start.x, y, color);
+		if (start.x > 0 && start.x < data->win_width && y > 0 && y < data->win_height)
+			my_mlx_pixel_put(data, start.x, y, *color);
 		if (d > 0)
 		{
 			y += y1;
@@ -40,7 +39,7 @@ void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 	}
 }
 //draw_line_y
-void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
+void	draw_line_y(t_dot start, t_dot end, t_data *data, int *color)
 {
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
@@ -54,9 +53,8 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 	int x = start.x;
 	while(start.y <= end.y)
 	{
-		if (x < 0 && x >= data->win_width && start.y < 0 && start.y >= data->win_height)
-			break;
-		my_mlx_pixel_put(data, x, start.y, color);
+		if (x > 0 && x < data->win_width && start.y > 0 && start.y < data->win_height)
+			my_mlx_pixel_put(data, x, start.y, *color);
 		if (d > 0)
 		{
 			x += x1;
@@ -68,14 +66,20 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 	}
 }
 //draw line function that redirect to draw_line_x or draw_line_y depending on the slope of the line
-void	draw_line(t_dot start, t_dot end, t_data *data, int color)
+void	draw_line(t_dot start, t_dot end, t_data *data, int *color)
 {
+	start.x *= start.zoom;
+	start.y *= start.zoom;
+	end.x *= end.zoom;
+	end.y *= end.zoom;
+	start.z *= start.zoom / 3;
+	end.z *= end.zoom / 3;
 	start = projection_iso(start);
 	end = projection_iso(end);
-	start.x += 350;
-	start.y += 350;
-	end.x += 350;
-	end.y += 350;
+	start.x = start.x_pad + start.x;
+	start.y += start.y_pad;
+	end.x += end.x_pad;
+	end.y += end.y_pad;
 	if (abs(end.y - start.y) < abs(end.x - start.x))
 	{
 		if (start.x > end.x)

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:24:20 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/08 15:59:43 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:40:47 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,17 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y)
 	int		x;
 	char	**split;
 
+	if (buffer == NULL)
+		return (-1);
 	split = ft_split(buffer, ' ');
 	x = 0;
 	while (split[x])
 	{
-		dot_matrix[y][x].x = x * ZOOM;
-		dot_matrix[y][x].y = y * ZOOM;
+		dot_matrix[y][x].x_pad = 500;
+		dot_matrix[y][x].y_pad = 500;
+		dot_matrix[y][x].zoom = 25;
+		dot_matrix[y][x].x = x;
+		dot_matrix[y][x].y = y;
 		dot_matrix[y][x].z = ft_atoi(split[x]);
 		dot_matrix[y][x].is_last_in_line = 0;
 		free(split[x]);
@@ -93,6 +98,7 @@ t_dot	**read_map(char *path)
 	dot_matrix = allocate_matrix(path);
     fd = open(path, O_RDONLY);
 	y = 0;
+	buffer = NULL;
 	if (fd <= 0)
 		ft_error("file does not exist.");
     while (get_next_line(fd, &buffer) > 0)

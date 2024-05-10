@@ -1,11 +1,6 @@
-to do:
-gradient function
-way to handle gradient whatever the max height is
-way to handle gradient when the height is gradient to
-find a way to center the projection in the screen
-find a way to show all the projection whatever is size
-parse the .fdf file and draw the point
+erreur actuel:
+-multiples problèmes dans read_map, draw_map ou les 2 qui entre autre, ne dessinent rien lorsqu'il n'y a qu'une line, sort de la mémoire lorsque x et y ne sont pas égaux, erreur lors de l'utilisation de la plupart des maps de test, etc...
 
-a way to draw the point:
-first parse the file with GNL and split to put everything in a char **table
-dessiner les points lorsqu'ils sont adjacents. char[0][0] avec char[0][1] et char[1][0]
+encore à faire;
+gradient de couleur, prise en compte des maps avec les couleurs intégrés. Example (julia.fdf) (1,0x810202)
+fermer lorsque echap ou croix (facile, déjà fait au par avant)

@@ -6,15 +6,17 @@
 # include "gnl/get_next_line.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
-# ifndef ZOOM
-#  define ZOOM 20
-# endif
+# define BASE_COLOR 0xf8f8f8
+# define TOP_COLOR 0xff5500
 typedef struct s_dot
 {
 	int	x;
 	int	y;
 	int	z;
 	int		is_last_in_line;
+	int x_pad;
+	int y_pad;
+	int zoom;
 }		t_dot;
 
 typedef struct s_data
@@ -33,7 +35,7 @@ typedef struct s_data
 
 void	ft_error(char *str);
 t_dot	**read_map(char *path);
-void	draw_line(t_dot start, t_dot end, t_data *data, int color);
+void	draw_line(t_dot start, t_dot end, t_data *data, int *color);
 t_dot	projection_iso(t_dot p);
 void    draw_map(t_dot **map, t_data *img);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
