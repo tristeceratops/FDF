@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:24:20 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/10 15:40:47 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:45:57 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,17 @@ t_dot	**allocate_matrix(char *path)
 	x = count_words(buffer, ' ');
 	while (get_next_line(fd, &buffer) > 0)
 	{
-		y++;
+		if (ft_strlen(buffer) > 0)
+			y++;
 		free(buffer);
 	}
+	if (ft_strlen(buffer) > 0)
+		y++;
 	free(buffer);
 	matrix = (t_dot **)malloc(sizeof(t_dot *) * (++y + 1));
+	matrix[--y] = NULL;
 	while (y > 0)
-		matrix[--y] = (t_dot *)malloc(sizeof(t_dot) * (x + 1));
+	matrix[--y] = (t_dot *)malloc(sizeof(t_dot) * (x + 1));
 	close(fd);
 	return (matrix);
 }
@@ -71,6 +75,7 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y)
 	x = 0;
 	while (split[x])
 	{
+		ft_printf("value of x y and z: %d %d %d.\n", x, y, ft_atoi(split[x]));
 		dot_matrix[y][x].x_pad = 500;
 		dot_matrix[y][x].y_pad = 500;
 		dot_matrix[y][x].zoom = 25;
@@ -103,39 +108,9 @@ t_dot	**read_map(char *path)
 		ft_error("file does not exist.");
     while (get_next_line(fd, &buffer) > 0)
 		parse_line(buffer, dot_matrix, y++);
-	parse_line(buffer, dot_matrix, y);
+	if (ft_strlen(buffer) > 0)
+		parse_line(buffer, dot_matrix, y);
 	//free(buffer);
 	close(fd);
 	return (dot_matrix);
 }
-/*
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-
-int main() {
-    char *path = "test.txt"; // Replace "your_map_file.txt" with the path to your map file
-    t_dot **dot_matrix = read_map(path);
-
-    // Print the matrix for testing
-    int i = 0;
-    int j = 0;
-    while (dot_matrix[i] != NULL) {
-        j = 0;
-        while (dot_matrix[i][j].is_last_in_line == 0) {
-            printf("(%d %d %d) ", (int)dot_matrix[i][j].x, (int)dot_matrix[i][j].y, (int)dot_matrix[i][j].z);
-			j++;
-        }
-		printf("(%d %d %d) ", (int)dot_matrix[i][j].x, (int)dot_matrix[i][j].y, (int)dot_matrix[i][j].z);
-        printf("\n");
-        i++;
-    }
-    // Free memory
-    i = 0;
-    while (dot_matrix[i] != NULL) {
-        free(dot_matrix[i]);
-        i++;
-    }
-    free(dot_matrix);    
-    return 0;
-}*/
