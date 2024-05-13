@@ -6,7 +6,7 @@
 # include "gnl/get_next_line.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
-# define BASE_COLOR 0xf8f8f8
+# define BASE_COLOR 0xf8f000
 # define TOP_COLOR 0xff5500
 typedef struct s_dot
 {
@@ -17,6 +17,7 @@ typedef struct s_dot
 	int x_pad;
 	int y_pad;
 	int zoom;
+	int	color;
 }		t_dot;
 
 typedef struct s_data

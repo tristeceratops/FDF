@@ -4,3 +4,9 @@ erreur actuel:
 encore à faire;
 gradient de couleur, prise en compte des maps avec les couleurs intégrés. Example (julia.fdf) (1,0x810202)
 fermer lorsque echap ou croix (facile, déjà fait au par avant)
+
+note à moi même(13/05):
+-il est nécessaire de prendre en compte les couleurs qui sont directement écrit dans le fichier
+-il est donc par extension nécessaire de faire un gradient entre valeur min et max de Z (on pourra calculer le nombre d'étape avec max_z - min_z et attribuer une couleur directement à chaque point pour ensuite faire le gradient entre les deux points)
+-pour gérer correctement le zoom et le padding, peut être faire le bonus directement et permettre à l'utilisateur de zoomer et de ce déplacer (sans la rotation car trop chiant), peut importe la map, on pourra ce centrer soi même
+-voir pour partir sur so_long

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:24:20 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/13 13:45:57 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:11:00 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,22 @@ t_dot	**allocate_matrix(char *path)
 	char	*buffer;
 	t_dot	**matrix;
 
-	x = 0;
-	y = 1;
+	x = -1;
+	y = 0;
 	fd = open(path, O_RDONLY);
 	if (fd <= 0)
 		ft_error("files does not exist.");
-	get_next_line(fd , &buffer);
-	x = count_words(buffer, ' ');
-	while (get_next_line(fd, &buffer) > 0)
+	while (get_next_line(fd, &buffer) > 0 || ft_strlen(buffer) > 0)
 	{
+		ft_printf("len of buffer is %d\n", ft_strlen(buffer));
 		if (ft_strlen(buffer) > 0)
 			y++;
+		if (x < 0)
+			x = count_words(buffer, ' ');
+		else if (x != count_words(buffer, ' '))
+			ft_error("Bad map format\n");
 		free(buffer);
 	}
-	if (ft_strlen(buffer) > 0)
-		y++;
 	free(buffer);
 	matrix = (t_dot **)malloc(sizeof(t_dot *) * (++y + 1));
 	matrix[--y] = NULL;
@@ -75,14 +76,14 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y)
 	x = 0;
 	while (split[x])
 	{
-		ft_printf("value of x y and z: %d %d %d.\n", x, y, ft_atoi(split[x]));
-		dot_matrix[y][x].x_pad = 500;
-		dot_matrix[y][x].y_pad = 500;
-		dot_matrix[y][x].zoom = 25;
+		dot_matrix[y][x].x_pad = 1920/2;
+		dot_matrix[y][x].y_pad = 0;
+		dot_matrix[y][x].zoom = 3;
 		dot_matrix[y][x].x = x;
 		dot_matrix[y][x].y = y;
 		dot_matrix[y][x].z = ft_atoi(split[x]);
 		dot_matrix[y][x].is_last_in_line = 0;
+		dot_matrix[y][x].color = BASE_COLOR;
 		free(split[x]);
 		x++;
 	}
@@ -106,10 +107,8 @@ t_dot	**read_map(char *path)
 	buffer = NULL;
 	if (fd <= 0)
 		ft_error("file does not exist.");
-    while (get_next_line(fd, &buffer) > 0)
+    while (get_next_line(fd, &buffer) > 0 || ft_strlen(buffer) > 0)
 		parse_line(buffer, dot_matrix, y++);
-	if (ft_strlen(buffer) > 0)
-		parse_line(buffer, dot_matrix, y);
 	//free(buffer);
 	close(fd);
 	return (dot_matrix);

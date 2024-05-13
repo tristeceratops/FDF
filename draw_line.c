@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:00:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/13 11:13:29 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:10:54 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,16 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int *color)
 //draw line function that redirect to draw_line_x or draw_line_y depending on the slope of the line
 void	draw_line(t_dot start, t_dot end, t_data *data, int *color)
 {
-	ft_printf("DRAW value of x y and z for START: %d %d %d.\n", start.x, start.y, start.z);
-	ft_printf("DRAW value of x y and z for END: %d %d %d.\n", end.x, end.y, end.z);
 	start.x *= start.zoom;
 	start.y *= start.zoom;
 	end.x *= end.zoom;
 	end.y *= end.zoom;
-	start.z *= start.zoom / 3;
-	end.z *= end.zoom / 3;
 	start = projection_iso(start);
 	end = projection_iso(end);
-	start.x = start.x_pad + start.x;
+	start.x += start.x_pad;
 	start.y += start.y_pad;
 	end.x += end.x_pad;
 	end.y += end.y_pad;
-	ft_printf("DRAW value after PROJ of x y and z for START: %d %d %d.\n", start.x, start.y, start.z);
-	ft_printf("DRAW value after PROF of x y and z for END: %d %d %d.\n", end.x, end.y, end.z);
 	if (abs(end.y - start.y) < abs(end.x - start.x))
 	{
 		if (start.x > end.x)
