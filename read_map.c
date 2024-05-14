@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 13:24:20 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/13 18:11:00 by ewoillar         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   read_map.c										 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: ewoillar <ewoillar@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/05/07 13:24:20 by ewoillar		  #+#	#+#			 */
+/*   Updated: 2024/05/14 12:48:17 by ewoillar		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "fdf.h"
@@ -65,7 +65,7 @@ t_dot	**allocate_matrix(char *path)
 	return (matrix);
 }
 
-int		parse_line(char *buffer, t_dot **dot_matrix, int y)
+int		parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 {
 	int		x;
 	char	**split;
@@ -76,9 +76,9 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y)
 	x = 0;
 	while (split[x])
 	{
-		dot_matrix[y][x].x_pad = 1920/2;
-		dot_matrix[y][x].y_pad = 0;
-		dot_matrix[y][x].zoom = 3;
+		dot_matrix[y][x].x_pad = data.x_pad;
+		dot_matrix[y][x].y_pad = data.y_pad;
+		dot_matrix[y][x].zoom = data.zoom;
 		dot_matrix[y][x].x = x;
 		dot_matrix[y][x].y = y;
 		dot_matrix[y][x].z = ft_atoi(split[x]);
@@ -94,21 +94,21 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y)
 }
 
 //parse la map et intégrer chaque point dans le tableau 2D 
-t_dot	**read_map(char *path)
+t_dot	**read_map(char *path, t_data data)
 {
-    int		fd;
-    t_dot	**dot_matrix;
-    char	*buffer;
+	int		fd;
+	t_dot	**dot_matrix;
+	char	*buffer;
 	int		y;
 
 	dot_matrix = allocate_matrix(path);
-    fd = open(path, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	y = 0;
 	buffer = NULL;
 	if (fd <= 0)
 		ft_error("file does not exist.");
-    while (get_next_line(fd, &buffer) > 0 || ft_strlen(buffer) > 0)
-		parse_line(buffer, dot_matrix, y++);
+	while (get_next_line(fd, &buffer) > 0 || ft_strlen(buffer) > 0)
+		parse_line(buffer, dot_matrix, y++, data);
 	//free(buffer);
 	close(fd);
 	return (dot_matrix);

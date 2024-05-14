@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw_line.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 17:00:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/13 18:10:54 by ewoillar         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   draw_line.c										:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: ewoillar <ewoillar@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/04/29 17:00:06 by ewoillar		  #+#	#+#			 */
+/*   Updated: 2024/05/14 12:32:48 by ewoillar		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "fdf.h"
@@ -68,16 +68,18 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int *color)
 //draw line function that redirect to draw_line_x or draw_line_y depending on the slope of the line
 void	draw_line(t_dot start, t_dot end, t_data *data, int *color)
 {
-	start.x *= start.zoom;
-	start.y *= start.zoom;
-	end.x *= end.zoom;
-	end.y *= end.zoom;
+	start.x *= data->zoom;
+	start.y *= data->zoom;
+	end.x *= data->zoom;
+	end.y *= data->zoom;
+	start.z *= data->zoom;
+	end.z *= data->zoom;
 	start = projection_iso(start);
 	end = projection_iso(end);
-	start.x += start.x_pad;
-	start.y += start.y_pad;
-	end.x += end.x_pad;
-	end.y += end.y_pad;
+	start.x += data->x_pad;
+	start.y += data->y_pad;
+	end.x += data->x_pad;
+	end.y += data->y_pad;
 	if (abs(end.y - start.y) < abs(end.x - start.x))
 	{
 		if (start.x > end.x)
