@@ -6,15 +6,16 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:12:37 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/14 17:38:09 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:41:57 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 int		get_light(int start, int end, double percentage)
 {
-	return ((int)(1 - percentage) * start + percentage * end);
+	return ((int)((1 - percentage) * start) + (percentage * end));
 }
 
 int		get_color_tab(t_data data, t_dot dot)
@@ -24,10 +25,10 @@ int		get_color_tab(t_data data, t_dot dot)
 	int		green;
 	int		blue;
 
-	percentage = (dot.z - data.min_z) / (data.max_z - data.min_z);
+	percentage = (double)(dot.z - data.min_z) / (data.max_z - data.min_z);
 	red = get_light((BASE_COLOR >> 16) & 0xFF, (TOP_COLOR >> 16) & 0xFF, percentage);
 	green = get_light((BASE_COLOR >> 8) & 0xFF, (TOP_COLOR >> 8) & 0xFF, percentage);
-	blue = get_light(BASE_COLOR & 0xFF, TOP_COLOR, percentage);
+	blue = get_light(BASE_COLOR & 0xFF, TOP_COLOR & 0xFF, percentage);
 	return ((red << 16) | (green << 8) | blue);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:02:25 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/14 17:42:09 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:42:19 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ int main(int argc, char **argv)
 	data.y_pad = 0;
 	data.zoom = 3;
 	data.map = read_map(argv[1], data);
-	data.map = fill_color_tab(data);
 	data.min_z = get_min_height(data.map, get_rows(data.map), get_columns(data.map));
 	data.max_z = get_max_height(data.map, get_rows(data.map), get_columns(data.map));
+	data.map = fill_color_tab(data);
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, data.win_width, data.win_height, "FDF");
 

@@ -23,13 +23,13 @@ void	draw_map(t_dot **map, t_data *data)
 		x = 0;
 		while (map[y][x].is_last_in_line != 1)
 		{
-			draw_line(map[y][x], map[y][x + 1], data, &map[y][x].color);
+			draw_line(map[y][x], map[y][x + 1], data);
 			if (map[y + 1])
-				draw_line(map[y][x], map[y + 1][x], data, &map[y][x].color);
+				draw_line(map[y][x], map[y + 1][x], data);
 			x++;
 		}
 		if (map[y][x].is_last_in_line == 1 && map[y + 1])
-			draw_line(map[y][x], map[y + 1][x], data, &map[y][x].color);
+			draw_line(map[y][x], map[y + 1][x], data);
 		y++;
 	}
 }

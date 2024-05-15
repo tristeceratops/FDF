@@ -11,8 +11,29 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
-void	draw_line_x(t_dot start, t_dot end, t_data *data, int *color)
+int		get_light_line(int start, int end, double percentage)
+{
+	return ((int)((1 - percentage) * start) + (percentage * end));
+}
+
+int		get_color_line(t_dot start, t_dot end, double percentage)
+{
+	int		red;
+	int		green;
+	int		blue;
+	//printf("start color = 0x%x\n", start.color);
+	red = get_light_line((start.color >> 16) & 0xFF, (end.color >> 16) & 0xFF, percentage);
+	green = get_light_line((start.color >> 8) & 0xFF, (end.color >> 8) & 0xFF, percentage);
+	blue = get_light_line(start.color & 0xFF, end.color & 0xFF, percentage);
+	//printf("percentage = %f\n", percentage);
+	//printf("red = 0x%x | green = 0x%x | blue = 0x%x\n", red, green, blue);
+	//printf("pixel color = 0x%x\n", ((red << 16) | (green << 8) | blue));
+	return ((red << 16) | (green << 8) | blue);
+}
+
+void	draw_line_x(t_dot start, t_dot end, t_data *data, int color)
 {
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
@@ -24,10 +45,14 @@ void	draw_line_x(t_dot start, t_dot end, t_data *data, int *color)
 	}
 	int d = 2 * dy - dx;
 	int y = start.y;
+	int	temp = start.x;
 	while(start.x <= end.x)
 	{
 		if (start.x > 0 && start.x < data->win_width && y > 0 && y < data->win_height)
-			my_mlx_pixel_put(data, start.x, y, *color);
+		{
+			color = get_color_line(start, end, ((double)(start.x - temp) / (end.x - temp)));
+			my_mlx_pixel_put(data, start.x, y, color);
+		}
 		if (d > 0)
 		{
 			y += y1;
@@ -39,7 +64,7 @@ void	draw_line_x(t_dot start, t_dot end, t_data *data, int *color)
 	}
 }
 //draw_line_y
-void	draw_line_y(t_dot start, t_dot end, t_data *data, int *color)
+void	draw_line_y(t_dot start, t_dot end, t_data *data, int color)
 {
 	int dx = end.x - start.x;
 	int dy = end.y - start.y;
@@ -51,10 +76,14 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int *color)
 	}
 	int d = 2 * dx - dy;
 	int x = start.x;
+	int	temp = start.y;
 	while(start.y <= end.y)
 	{
 		if (x > 0 && x < data->win_width && start.y > 0 && start.y < data->win_height)
-			my_mlx_pixel_put(data, x, start.y, *color);
+		{
+			color = get_color_line(start, end, ((double)(start.y - temp) / (end.y - temp)));
+			my_mlx_pixel_put(data, x, start.y, color);
+		}
 		if (d > 0)
 		{
 			x += x1;
@@ -66,8 +95,13 @@ void	draw_line_y(t_dot start, t_dot end, t_data *data, int *color)
 	}
 }
 //draw line function that redirect to draw_line_x or draw_line_y depending on the slope of the line
-void	draw_line(t_dot start, t_dot end, t_data *data, int *color)
+void	draw_line(t_dot start, t_dot end, t_data *data)
 {
+	int		color;
+	if (start.z > end.z)
+		color = start.color;
+	else
+		color = end.color;
 	start.x *= data->zoom;
 	start.y *= data->zoom;
 	end.x *= data->zoom;

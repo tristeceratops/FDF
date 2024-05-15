@@ -23,6 +23,7 @@ t_dot	projection_iso(t_dot p)
 	p2.y_pad = p.y_pad;
 	p2.zoom = p.zoom;
 	p2.z = p.z;
+	p2.color = p.color;
 	
 	return (p2);
 }

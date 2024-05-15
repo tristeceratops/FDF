@@ -47,7 +47,6 @@ t_dot	**allocate_matrix(char *path)
 		ft_error("files does not exist.");
 	while (get_next_line(fd, &buffer) > 0 || ft_strlen(buffer) > 0)
 	{
-		ft_printf("len of buffer is %d\n", ft_strlen(buffer));
 		if (ft_strlen(buffer) > 0)
 			y++;
 		if (x < 0)

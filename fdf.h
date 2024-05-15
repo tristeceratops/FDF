@@ -6,8 +6,8 @@
 # include "gnl/get_next_line.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
-# define BASE_COLOR 0xf8f8f8
-# define TOP_COLOR 0xff5500
+# define BASE_COLOR 0x44a5a5
+# define TOP_COLOR 0xffff00
 typedef struct s_dot
 {
 	int	x;
@@ -41,7 +41,7 @@ typedef struct s_data
 
 void	ft_error(char *str);
 t_dot	**read_map(char *path, t_data data);
-void	draw_line(t_dot start, t_dot end, t_data *data, int *color);
+void	draw_line(t_dot start, t_dot end, t_data *data);
 t_dot	projection_iso(t_dot p);
 void	draw_map(t_dot **map, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
