@@ -12,11 +12,11 @@
 
 #include "fdf.h"
 
-int		count_words(char *str, char separator)
+int	count_words(char *str, char separator)
 {
 	int		i;
 	int		words;
-	
+
 	i = 0;
 	words = 0;
 	while (str[i])
@@ -29,6 +29,17 @@ int		count_words(char *str, char separator)
 			i++;
 	}
 	return (words);
+}
+
+t_dot	**allocate_matrix2(int x, int y)
+{
+	t_dot	**matrix;
+
+	matrix = (t_dot **)malloc(sizeof(t_dot *) * (++y + 1));
+	matrix[--y] = NULL;
+	while (y > 0)
+		matrix[--y] = (t_dot *)malloc(sizeof(t_dot) * (x + 1));
+	return (matrix);
 }
 
 //allocate the matrix of dot to fit the size of the map
@@ -56,15 +67,12 @@ t_dot	**allocate_matrix(char *path)
 		free(buffer);
 	}
 	free(buffer);
-	matrix = (t_dot **)malloc(sizeof(t_dot *) * (++y + 1));
-	matrix[--y] = NULL;
-	while (y > 0)
-	matrix[--y] = (t_dot *)malloc(sizeof(t_dot) * (x + 1));
+	matrix = allocate_matrix2(x, y);
 	close(fd);
 	return (matrix);
 }
 
-int		parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
+int	parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 {
 	int		x;
 	char	**split;
@@ -82,7 +90,7 @@ int		parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 		dot_matrix[y][x].y = y;
 		dot_matrix[y][x].z = ft_atoi(split[x]);
 		dot_matrix[y][x].is_last_in_line = 0;
-		dot_matrix[y][x].color = BASE_COLOR;
+		dot_matrix[y][x].color = B_COLOR;
 		free(split[x]);
 		x++;
 	}
@@ -108,7 +116,7 @@ t_dot	**read_map(char *path, t_data data)
 		ft_error("file does not exist.");
 	while (get_next_line(fd, &buffer) > 0 || ft_strlen(buffer) > 0)
 		parse_line(buffer, dot_matrix, y++, data);
-	//free(buffer);
+	free(buffer);
 	close(fd);
 	return (dot_matrix);
 }

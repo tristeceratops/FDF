@@ -14,7 +14,7 @@
 
 t_dot	projection_iso(t_dot p)
 {
-	t_dot p2;
+	t_dot	p2;
 
 	p2.x = (p.x - p.y) * cos(0.5);
 	p2.y = (p.x + p.y) * sin(0.5) - p.z;
@@ -24,6 +24,5 @@ t_dot	projection_iso(t_dot p)
 	p2.zoom = p.zoom;
 	p2.z = p.z;
 	p2.color = p.color;
-	
 	return (p2);
 }

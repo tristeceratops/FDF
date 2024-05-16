@@ -12,18 +12,18 @@
 
 #include "fdf.h"
 
-int	 get_max_height(t_dot **tableau, int lignes, int colonnes)
+int	get_max_height(t_dot **tableau, int rows, int columns)
 {
-	int	 maximum;
-	int	 i;
-	int	 j;
+	int	maximum;
+	int	i;
+	int	j;
 
 	maximum = tableau[0][0].z;
 	i = 0;
-	while (i < lignes)
+	while (i < rows)
 	{
 		j = 0;
-		while (j < colonnes)
+		while (j < columns)
 		{
 			if (tableau[i][j].z > maximum)
 				maximum = tableau[i][j].z;
@@ -34,31 +34,31 @@ int	 get_max_height(t_dot **tableau, int lignes, int colonnes)
 	return (maximum);
 }
 
-int	 get_min_height(t_dot **tableau, int lignes, int colonnes)
+int	get_min_height(t_dot **tableau, int rows, int columns)
 {
-	int	 minimum;
-	int	 i;
-	int	 j;
+	int	minimum;
+	int	i;
+	int	j;
 
 	minimum = tableau[0][0].z;
 	i = 0;
-	while (i < lignes)
+	while (i < rows)
 	{
 		j = 0;
-		while (j < colonnes)
+		while (j < columns)
 		{
 			if (tableau[i][j].z < minimum)
 				minimum = tableau[i][j].z;
 			j++;
 		}
-	i++;
+		i++;
 	}
 	return (minimum);
 }
 
-int	 get_rows(t_dot **table)
+int	get_rows(t_dot **table)
 {
-	int	 rows;
+	int	rows;
 
 	rows = 0;
 	while (table[rows] != NULL)
@@ -66,9 +66,9 @@ int	 get_rows(t_dot **table)
 	return (rows);
 }
 
-int	 get_columns(t_dot **table)
+int	get_columns(t_dot **table)
 {
-	int	 columns;
+	int	columns;
 
 	columns = 0;
 	while (table[0][columns].is_last_in_line != 1)
@@ -76,4 +76,17 @@ int	 get_columns(t_dot **table)
 	if (table[0][columns].is_last_in_line == 1)
 		columns++;
 	return (columns);
+}
+
+void	free_map(t_dot **table)
+{
+	int	rows;
+
+	rows = 0;
+	while (table[rows] != NULL)
+	{
+		free(table[rows]);
+		rows++;
+	}
+	free(table);
 }

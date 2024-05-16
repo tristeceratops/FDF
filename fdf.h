@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/16 16:20:58 by ewoillar          #+#    #+#             */
+/*   Updated: 2024/05/16 17:07:35 by ewoillar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 # include <mlx.h>
@@ -6,17 +18,18 @@
 # include "gnl/get_next_line.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
-# define BASE_COLOR 0x44a5a5
-# define TOP_COLOR 0xffff00
+# define B_COLOR 0x8a8a8a
+# define T_COLOR 0xa63535
+
 typedef struct s_dot
 {
 	int	x;
 	int	y;
 	int	z;
-	int		is_last_in_line;
-	int x_pad;
-	int y_pad;
-	int zoom;
+	int	is_last_in_line;
+	int	x_pad;
+	int	y_pad;
+	int	zoom;
 	int	color;
 }		t_dot;
 
@@ -36,6 +49,8 @@ typedef struct s_data
 	int		y_pad;
 	int		min_z;
 	int		max_z;
+	int		rows;
+	int		columns;
 	t_dot	**map;
 }		t_data;
 
@@ -45,10 +60,12 @@ void	draw_line(t_dot start, t_dot end, t_data *data);
 t_dot	projection_iso(t_dot p);
 void	draw_map(t_dot **map, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int	 get_min_height(t_dot **tableau, int lignes, int colonnes);
-int	 get_max_height(t_dot **tableau, int lignes, int colonnes);
-int	 get_rows(t_dot **table);
-int	 get_columns(t_dot **table);
+int		get_min_height(t_dot **tableau, int rows, int columns);
+int		get_max_height(t_dot **tableau, int rows, int columns);
+int		get_rows(t_dot **table);
+int		get_columns(t_dot **table);
 t_dot	**fill_color_tab(t_data data);
+int		get_light(int start, int end, double percentage);
+void	free_map(t_dot **table);
 
 #endif

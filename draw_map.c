@@ -14,8 +14,8 @@
 
 void	draw_map(t_dot **map, t_data *data)
 {
-	int	 x;
-	int	 y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (map[y])
