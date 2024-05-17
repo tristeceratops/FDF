@@ -63,7 +63,10 @@ t_dot	**allocate_matrix(char *path)
 		if (x < 0)
 			x = count_words(buffer, ' ');
 		else if (x != count_words(buffer, ' '))
+		{
 			ft_error("Bad map format\n");
+			free(buffer);
+		}		
 		free(buffer);
 	}
 	free(buffer);

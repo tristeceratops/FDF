@@ -6,20 +6,11 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:02:25 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/16 17:31:14 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:47:09 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	move_image(int	*pad, int value, t_data *data)
-{
-	*pad += value;
-	mlx_destroy_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, data->win_width, data->win_height);
-	draw_map(data->map, data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-}
 
 int	key_hook(int keycode, t_data *data)
 {
@@ -33,13 +24,13 @@ int	key_hook(int keycode, t_data *data)
 		exit(0);
 	}
 	else if (keycode == XK_KP_Up)
-		move_image(&data->y_pad, -10, data);
+		move_image(&data->y_pad, -20, data);
 	else if (keycode == XK_KP_Down)
-		move_image(&data->y_pad, 10, data);
+		move_image(&data->y_pad, 20, data);
 	else if (keycode == XK_KP_Left)
-		move_image(&data->x_pad, -10, data);
+		move_image(&data->x_pad, -20, data);
 	else if (keycode == XK_KP_Right)
-		move_image(&data->x_pad, 10, data);
+		move_image(&data->x_pad, 20, data);
 	else if (keycode == XK_KP_Home)
 	{
 		if (data->zoom > 1)
@@ -79,7 +70,7 @@ t_data	data_init(t_data data, char *arg)
 	data.win_height = 1080;
 	data.win_width = 1920;
 	data.x_pad = data.win_width / 2;
-	data.y_pad = data.win_height / 4;
+	data.y_pad = 0;
 	data.zoom = 4;
 	data.map = read_map(arg, data);
 	data.rows = get_rows(data.map);
@@ -106,6 +97,12 @@ int	main(int argc, char **argv)
 	data = data_init(data, argv[1]);
 	draw_map(data.map, &data);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
+	mlx_string_put(data.mlx, data.win, 100, 140, 0xf8f8f8, "up : numpad 8");
+	mlx_string_put(data.mlx, data.win, 100, 160, 0xf8f8f8, "down : numpad 2");
+	mlx_string_put(data.mlx, data.win, 100, 180, 0xf8f8f8, "right : numpad 6");
+	mlx_string_put(data.mlx, data.win, 100, 200, 0xf8f8f8, "left : numpad 4");
+	mlx_string_put(data.mlx, data.win, 100, 220, 0xf8f8f8, "zoom: numpad 9");
+	mlx_string_put(data.mlx, data.win, 100, 240, 0xf8f8f8, "dezoom: numpad 7");
 	mlx_hook(data.win, 2, 1L << 0, key_hook, &data);
 	mlx_hook(data.win, 17, 1L << 0, red_cross, &data);
 	mlx_loop(data.mlx);

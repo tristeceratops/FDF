@@ -90,31 +90,3 @@ void	free_map(t_dot **table)
 	}
 	free(table);
 }
-
-//function to convert array of a hexadecimal value into int
-int	hexarraytoint(char *hex)
-{
-	int		length;
-	int		base;
-	int		decimal;
-	int		i;
-
-	length = ft_strlen(hex);
-	base = 1;
-	decimal = 0;
-	i = length - 1;
-	if (hex[i] == '0' && hex[i - 1] == 'x')
-		i -= 2;
-	while (i >= 0)
-	{
-		if (hex[i] >= '0' && hex[i] <= '9')
-			decimal += (hex[i] - 48) * base;
-		else if (hex[i] >= 'A' && hex[i] <= 'F')
-			decimal += (hex[i] - 55) * base;
-		else if (hex[i] >= 'a' && hex[i] <= 'f')
-			decimal += (hex[i] - 87) * base;
-		base = base * 16;
-		i--;
-	}
-	return (decimal);
-}
