@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:12:37 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/16 11:53:14 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:43:00 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ t_dot	**fill_color_tab(t_data data)
 		j = 0;
 		while (j < get_columns(data.map))
 		{
-			if (data.map[i][j].z == data.min_z)
-				data.map[i][j].color = B_COLOR;
-			else if (data.map[i][j].z == data.max_z)
-				data.map[i][j].color = T_COLOR;
-			else
-				data.map[i][j].color = get_color_tab(data, data.map[i][j]);
+			if (data.map[i][j].color < 0)
+			{	if (data.map[i][j].z == data.min_z)
+					data.map[i][j].color = B_COLOR;
+				else if (data.map[i][j].z == data.max_z)
+					data.map[i][j].color = T_COLOR;
+				else
+					data.map[i][j].color = get_color_tab(data, data.map[i][j]);
+			}
 			j++;
 		}
 		i++;

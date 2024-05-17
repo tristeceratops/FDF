@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:58 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/16 17:07:35 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:49:12 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "gnl/get_next_line.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
-# define B_COLOR 0x8a8a8a
-# define T_COLOR 0xa63535
+# define B_COLOR 0xfffee9
+# define T_COLOR 0xc972c9
 
 typedef struct s_dot
 {
@@ -67,5 +67,6 @@ int		get_columns(t_dot **table);
 t_dot	**fill_color_tab(t_data data);
 int		get_light(int start, int end, double percentage);
 void	free_map(t_dot **table);
+int		hexarraytoint(char *hex);
 
 #endif

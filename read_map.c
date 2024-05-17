@@ -76,6 +76,8 @@ int	parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 {
 	int		x;
 	char	**split;
+	char	**dot;
+	int		j;
 
 	if (buffer == NULL)
 		return (-1);
@@ -83,6 +85,7 @@ int	parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 	x = 0;
 	while (split[x])
 	{
+		dot = ft_split(split[x], ',');
 		dot_matrix[y][x].x_pad = data.x_pad;
 		dot_matrix[y][x].y_pad = data.y_pad;
 		dot_matrix[y][x].zoom = data.zoom;
@@ -90,7 +93,13 @@ int	parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 		dot_matrix[y][x].y = y;
 		dot_matrix[y][x].z = ft_atoi(split[x]);
 		dot_matrix[y][x].is_last_in_line = 0;
-		dot_matrix[y][x].color = B_COLOR;
+		dot_matrix[y][x].color = -1;
+		if (dot[1] != NULL)
+			dot_matrix[y][x].color = hexarraytoint(dot[1]);
+		j = 0;
+		while (dot[j])
+			free(dot[j++]);
+		free(dot);
 		free(split[x]);
 		x++;
 	}
