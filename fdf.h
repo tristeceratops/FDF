@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:58 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/23 14:35:12 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:35:22 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ int		get_light(int start, int end, double percentage);
 void	free_map(t_dot **table);
 int		hexarraytoint(char *hex);
 void	move_image(int	*pad, int value, t_data *data);
+void	draw_line_x(t_dot start, t_dot end, t_data *data, int color);
+void	draw_line_y(t_dot start, t_dot end, t_data *data, int color);
 
 #endif
