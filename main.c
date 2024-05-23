@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:02:25 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/17 13:47:09 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:58:53 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,8 @@ int	key_hook(int keycode, t_data *data)
 		move_image(&data->x_pad, -20, data);
 	else if (keycode == XK_KP_Right)
 		move_image(&data->x_pad, 20, data);
-	else if (keycode == XK_KP_Home)
-	{
-		if (data->zoom > 1)
-			move_image(&data->zoom, -1, data);
-	}
+	else if (keycode == XK_KP_Home && data->zoom > 1)
+		move_image(&data->zoom, -1, data);
 	else if (keycode == XK_KP_Page_Up)
 		move_image(&data->zoom, 1, data);
 	return (0);
@@ -70,8 +67,8 @@ t_data	data_init(t_data data, char *arg)
 	data.win_height = 1080;
 	data.win_width = 1920;
 	data.x_pad = data.win_width / 2;
-	data.y_pad = 0;
-	data.zoom = 4;
+	data.y_pad = data.win_height / 4;
+	data.zoom = 1;
 	data.map = read_map(arg, data);
 	data.rows = get_rows(data.map);
 	data.columns = get_columns(data.map);

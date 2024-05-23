@@ -19,8 +19,6 @@ t_dot	projection_iso(t_dot p)
 	p2.x = (p.x - p.y) * cos(0.5);
 	p2.y = (p.x + p.y) * sin(0.5) - p.z;
 	p2.is_last_in_line = p.is_last_in_line;
-	p2.x_pad = p.x_pad;
-	p2.y_pad = p.y_pad;
 	p2.zoom = p.zoom;
 	p2.z = p.z;
 	p2.color = p.color;

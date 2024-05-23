@@ -66,7 +66,7 @@ t_dot	**allocate_matrix(char *path)
 		{
 			ft_error("Bad map format\n");
 			free(buffer);
-		}		
+		}
 		free(buffer);
 	}
 	free(buffer);
@@ -89,8 +89,6 @@ int	parse_line(char *buffer, t_dot **dot_matrix, int y, t_data data)
 	while (split[x])
 	{
 		dot = ft_split(split[x], ',');
-		dot_matrix[y][x].x_pad = data.x_pad;
-		dot_matrix[y][x].y_pad = data.y_pad;
 		dot_matrix[y][x].zoom = data.zoom;
 		dot_matrix[y][x].x = x;
 		dot_matrix[y][x].y = y;

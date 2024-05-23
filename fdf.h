@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:20:58 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/17 12:29:24 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:35:12 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ typedef struct s_dot
 	int	y;
 	int	z;
 	int	is_last_in_line;
-	int	x_pad;
-	int	y_pad;
 	int	zoom;
 	int	color;
 }		t_dot;
@@ -53,6 +51,17 @@ typedef struct s_data
 	int		columns;
 	t_dot	**map;
 }		t_data;
+
+typedef struct s_bresenham
+{
+	t_dot	*start;
+	t_dot	*end;
+	int		dx;
+	int		dy;
+	int		d;
+	int		iterator;
+	int		iterator_value;
+}		t_bresenham;
 
 void	ft_error(char *str);
 t_dot	**read_map(char *path, t_data data);
