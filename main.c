@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:02:25 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/23 16:05:51 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:22:49 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	main(int argc, char **argv)
 	if (!check_file_extension(argv[1]))
 		ft_error("Invalid file extension, must be 'filename.fdf'");
 	data = data_init(data, argv[1]);
+	data.zoom = intmodif(&data);
 	draw_map(data.map, &data);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_string_put(data.mlx, data.win, 100, 140, 0xf8f8f8, "up : numpad 8");

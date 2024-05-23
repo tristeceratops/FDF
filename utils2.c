@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:06:44 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/05/23 11:15:27 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:23:15 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ void	move_image(int	*pad, int value, t_data *data)
 	"zoom: numpad 9");
 	mlx_string_put(data->mlx, data->win, 100, 240, 0xf8f8f8, \
 	"dezoom: numpad 7");
+}
+
+int		intmodif(t_data *data)
+{
+	int		mult;
+	
+	mult = 1;
+	while (mult * data->rows < data->win_width / 8)
+		mult++;
+	return (mult);
 }
